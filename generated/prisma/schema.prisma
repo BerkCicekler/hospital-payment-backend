@@ -58,3 +58,10 @@ model WalletTransaction {
 
   @@unique([walletId, idempotencyKey])
 }
+
+model Institution {
+  id        String                               @id @default(uuid()) @db.Uuid
+  name      String
+  location  Unsupported("geography(Point,4326)")
+  createdAt DateTime                             @default(now())
+}

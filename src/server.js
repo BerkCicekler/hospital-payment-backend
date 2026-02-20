@@ -5,6 +5,7 @@ import { connectDB, disconnectDB } from "./config/db.js";
 //Import routes
 import authRoutes from './routes/authRoutes.js'
 import walletRoutes from './routes/walletRoutes.js'
+import instituonsRoutes from './routes/institutionRoutes.js'
 
 config();
 connectDB();
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true}));
 // API Routes
 app.use("/auth", authRoutes);
 app.use("/wallet", walletRoutes);
+app.use("/institution", instituonsRoutes)
 
 
 const PORT = 5001;

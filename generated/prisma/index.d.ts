@@ -28,6 +28,11 @@ export type Wallet = $Result.DefaultSelection<Prisma.$WalletPayload>
  * 
  */
 export type WalletTransaction = $Result.DefaultSelection<Prisma.$WalletTransactionPayload>
+/**
+ * Model Institution
+ * 
+ */
+export type Institution = $Result.DefaultSelection<Prisma.$InstitutionPayload>
 
 /**
  * Enums
@@ -206,6 +211,16 @@ export class PrismaClient<
     * ```
     */
   get walletTransaction(): Prisma.WalletTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.institution`: Exposes CRUD operations for the **Institution** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Institutions
+    * const institutions = await prisma.institution.findMany()
+    * ```
+    */
+  get institution(): Prisma.InstitutionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -256,8 +271,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.3.0
-   * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
+   * Prisma Client JS version: 7.4.0
+   * Query Engine version: ab56fe763f921d033a6c195e7ddeb3e255bdbb57
    */
   export type PrismaVersion = {
     client: string
@@ -642,7 +657,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Wallet: 'Wallet',
-    WalletTransaction: 'WalletTransaction'
+    WalletTransaction: 'WalletTransaction',
+    Institution: 'Institution'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -658,7 +674,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "wallet" | "walletTransaction"
+      modelProps: "user" | "wallet" | "walletTransaction" | "institution"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -884,6 +900,64 @@ export namespace Prisma {
           }
         }
       }
+      Institution: {
+        payload: Prisma.$InstitutionPayload<ExtArgs>
+        fields: Prisma.InstitutionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InstitutionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InstitutionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          findFirst: {
+            args: Prisma.InstitutionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InstitutionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          findMany: {
+            args: Prisma.InstitutionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>[]
+          }
+          delete: {
+            args: Prisma.InstitutionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          update: {
+            args: Prisma.InstitutionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          deleteMany: {
+            args: Prisma.InstitutionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InstitutionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InstitutionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>[]
+          }
+          aggregate: {
+            args: Prisma.InstitutionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInstitution>
+          }
+          groupBy: {
+            args: Prisma.InstitutionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InstitutionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InstitutionCountArgs<ExtArgs>
+            result: $Utils.Optional<InstitutionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -995,6 +1069,7 @@ export namespace Prisma {
     user?: UserOmit
     wallet?: WalletOmit
     walletTransaction?: WalletTransactionOmit
+    institution?: InstitutionOmit
   }
 
   /* Types for Logging */
@@ -4409,6 +4484,825 @@ export namespace Prisma {
 
 
   /**
+   * Model Institution
+   */
+
+  export type AggregateInstitution = {
+    _count: InstitutionCountAggregateOutputType | null
+    _min: InstitutionMinAggregateOutputType | null
+    _max: InstitutionMaxAggregateOutputType | null
+  }
+
+  export type InstitutionMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+  }
+
+  export type InstitutionMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+  }
+
+  export type InstitutionCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type InstitutionMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+  }
+
+  export type InstitutionMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+  }
+
+  export type InstitutionCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type InstitutionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Institution to aggregate.
+     */
+    where?: InstitutionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Institutions to fetch.
+     */
+    orderBy?: InstitutionOrderByWithRelationInput | InstitutionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InstitutionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Institutions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Institutions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Institutions
+    **/
+    _count?: true | InstitutionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InstitutionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InstitutionMaxAggregateInputType
+  }
+
+  export type GetInstitutionAggregateType<T extends InstitutionAggregateArgs> = {
+        [P in keyof T & keyof AggregateInstitution]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInstitution[P]>
+      : GetScalarType<T[P], AggregateInstitution[P]>
+  }
+
+
+
+
+  export type InstitutionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InstitutionWhereInput
+    orderBy?: InstitutionOrderByWithAggregationInput | InstitutionOrderByWithAggregationInput[]
+    by: InstitutionScalarFieldEnum[] | InstitutionScalarFieldEnum
+    having?: InstitutionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InstitutionCountAggregateInputType | true
+    _min?: InstitutionMinAggregateInputType
+    _max?: InstitutionMaxAggregateInputType
+  }
+
+  export type InstitutionGroupByOutputType = {
+    id: string
+    name: string
+    createdAt: Date
+    _count: InstitutionCountAggregateOutputType | null
+    _min: InstitutionMinAggregateOutputType | null
+    _max: InstitutionMaxAggregateOutputType | null
+  }
+
+  type GetInstitutionGroupByPayload<T extends InstitutionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InstitutionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InstitutionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InstitutionGroupByOutputType[P]>
+            : GetScalarType<T[P], InstitutionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InstitutionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["institution"]>
+
+
+  export type InstitutionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["institution"]>
+
+  export type InstitutionSelectScalar = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+  }
+
+  export type InstitutionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt", ExtArgs["result"]["institution"]>
+
+  export type $InstitutionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Institution"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      createdAt: Date
+    }, ExtArgs["result"]["institution"]>
+    composites: {}
+  }
+
+  type InstitutionGetPayload<S extends boolean | null | undefined | InstitutionDefaultArgs> = $Result.GetResult<Prisma.$InstitutionPayload, S>
+
+  type InstitutionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InstitutionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InstitutionCountAggregateInputType | true
+    }
+
+  export interface InstitutionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Institution'], meta: { name: 'Institution' } }
+    /**
+     * Find zero or one Institution that matches the filter.
+     * @param {InstitutionFindUniqueArgs} args - Arguments to find a Institution
+     * @example
+     * // Get one Institution
+     * const institution = await prisma.institution.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InstitutionFindUniqueArgs>(args: SelectSubset<T, InstitutionFindUniqueArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Institution that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InstitutionFindUniqueOrThrowArgs} args - Arguments to find a Institution
+     * @example
+     * // Get one Institution
+     * const institution = await prisma.institution.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InstitutionFindUniqueOrThrowArgs>(args: SelectSubset<T, InstitutionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Institution that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionFindFirstArgs} args - Arguments to find a Institution
+     * @example
+     * // Get one Institution
+     * const institution = await prisma.institution.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InstitutionFindFirstArgs>(args?: SelectSubset<T, InstitutionFindFirstArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Institution that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionFindFirstOrThrowArgs} args - Arguments to find a Institution
+     * @example
+     * // Get one Institution
+     * const institution = await prisma.institution.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InstitutionFindFirstOrThrowArgs>(args?: SelectSubset<T, InstitutionFindFirstOrThrowArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Institutions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Institutions
+     * const institutions = await prisma.institution.findMany()
+     * 
+     * // Get first 10 Institutions
+     * const institutions = await prisma.institution.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const institutionWithIdOnly = await prisma.institution.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InstitutionFindManyArgs>(args?: SelectSubset<T, InstitutionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Delete a Institution.
+     * @param {InstitutionDeleteArgs} args - Arguments to delete one Institution.
+     * @example
+     * // Delete one Institution
+     * const Institution = await prisma.institution.delete({
+     *   where: {
+     *     // ... filter to delete one Institution
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InstitutionDeleteArgs>(args: SelectSubset<T, InstitutionDeleteArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Institution.
+     * @param {InstitutionUpdateArgs} args - Arguments to update one Institution.
+     * @example
+     * // Update one Institution
+     * const institution = await prisma.institution.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InstitutionUpdateArgs>(args: SelectSubset<T, InstitutionUpdateArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Institutions.
+     * @param {InstitutionDeleteManyArgs} args - Arguments to filter Institutions to delete.
+     * @example
+     * // Delete a few Institutions
+     * const { count } = await prisma.institution.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InstitutionDeleteManyArgs>(args?: SelectSubset<T, InstitutionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Institutions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Institutions
+     * const institution = await prisma.institution.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InstitutionUpdateManyArgs>(args: SelectSubset<T, InstitutionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Institutions and returns the data updated in the database.
+     * @param {InstitutionUpdateManyAndReturnArgs} args - Arguments to update many Institutions.
+     * @example
+     * // Update many Institutions
+     * const institution = await prisma.institution.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Institutions and only return the `id`
+     * const institutionWithIdOnly = await prisma.institution.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InstitutionUpdateManyAndReturnArgs>(args: SelectSubset<T, InstitutionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+
+    /**
+     * Count the number of Institutions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionCountArgs} args - Arguments to filter Institutions to count.
+     * @example
+     * // Count the number of Institutions
+     * const count = await prisma.institution.count({
+     *   where: {
+     *     // ... the filter for the Institutions we want to count
+     *   }
+     * })
+    **/
+    count<T extends InstitutionCountArgs>(
+      args?: Subset<T, InstitutionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InstitutionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Institution.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InstitutionAggregateArgs>(args: Subset<T, InstitutionAggregateArgs>): Prisma.PrismaPromise<GetInstitutionAggregateType<T>>
+
+    /**
+     * Group by Institution.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InstitutionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InstitutionGroupByArgs['orderBy'] }
+        : { orderBy?: InstitutionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InstitutionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInstitutionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Institution model
+   */
+  readonly fields: InstitutionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Institution.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InstitutionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Institution model
+   */
+  interface InstitutionFieldRefs {
+    readonly id: FieldRef<"Institution", 'String'>
+    readonly name: FieldRef<"Institution", 'String'>
+    readonly createdAt: FieldRef<"Institution", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Institution findUnique
+   */
+  export type InstitutionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Filter, which Institution to fetch.
+     */
+    where: InstitutionWhereUniqueInput
+  }
+
+  /**
+   * Institution findUniqueOrThrow
+   */
+  export type InstitutionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Filter, which Institution to fetch.
+     */
+    where: InstitutionWhereUniqueInput
+  }
+
+  /**
+   * Institution findFirst
+   */
+  export type InstitutionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Filter, which Institution to fetch.
+     */
+    where?: InstitutionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Institutions to fetch.
+     */
+    orderBy?: InstitutionOrderByWithRelationInput | InstitutionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Institutions.
+     */
+    cursor?: InstitutionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Institutions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Institutions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Institutions.
+     */
+    distinct?: InstitutionScalarFieldEnum | InstitutionScalarFieldEnum[]
+  }
+
+  /**
+   * Institution findFirstOrThrow
+   */
+  export type InstitutionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Filter, which Institution to fetch.
+     */
+    where?: InstitutionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Institutions to fetch.
+     */
+    orderBy?: InstitutionOrderByWithRelationInput | InstitutionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Institutions.
+     */
+    cursor?: InstitutionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Institutions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Institutions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Institutions.
+     */
+    distinct?: InstitutionScalarFieldEnum | InstitutionScalarFieldEnum[]
+  }
+
+  /**
+   * Institution findMany
+   */
+  export type InstitutionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Filter, which Institutions to fetch.
+     */
+    where?: InstitutionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Institutions to fetch.
+     */
+    orderBy?: InstitutionOrderByWithRelationInput | InstitutionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Institutions.
+     */
+    cursor?: InstitutionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Institutions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Institutions.
+     */
+    skip?: number
+    distinct?: InstitutionScalarFieldEnum | InstitutionScalarFieldEnum[]
+  }
+
+  /**
+   * Institution update
+   */
+  export type InstitutionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Institution.
+     */
+    data: XOR<InstitutionUpdateInput, InstitutionUncheckedUpdateInput>
+    /**
+     * Choose, which Institution to update.
+     */
+    where: InstitutionWhereUniqueInput
+  }
+
+  /**
+   * Institution updateMany
+   */
+  export type InstitutionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Institutions.
+     */
+    data: XOR<InstitutionUpdateManyMutationInput, InstitutionUncheckedUpdateManyInput>
+    /**
+     * Filter which Institutions to update
+     */
+    where?: InstitutionWhereInput
+    /**
+     * Limit how many Institutions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Institution updateManyAndReturn
+   */
+  export type InstitutionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * The data used to update Institutions.
+     */
+    data: XOR<InstitutionUpdateManyMutationInput, InstitutionUncheckedUpdateManyInput>
+    /**
+     * Filter which Institutions to update
+     */
+    where?: InstitutionWhereInput
+    /**
+     * Limit how many Institutions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Institution delete
+   */
+  export type InstitutionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Filter which Institution to delete.
+     */
+    where: InstitutionWhereUniqueInput
+  }
+
+  /**
+   * Institution deleteMany
+   */
+  export type InstitutionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Institutions to delete
+     */
+    where?: InstitutionWhereInput
+    /**
+     * Limit how many Institutions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Institution without action
+   */
+  export type InstitutionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4455,6 +5349,15 @@ export namespace Prisma {
   };
 
   export type WalletTransactionScalarFieldEnum = (typeof WalletTransactionScalarFieldEnum)[keyof typeof WalletTransactionScalarFieldEnum]
+
+
+  export const InstitutionScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt'
+  };
+
+  export type InstitutionScalarFieldEnum = (typeof InstitutionScalarFieldEnum)[keyof typeof InstitutionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4748,6 +5651,48 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"WalletTransaction"> | Date | string
   }
 
+  export type InstitutionWhereInput = {
+    AND?: InstitutionWhereInput | InstitutionWhereInput[]
+    OR?: InstitutionWhereInput[]
+    NOT?: InstitutionWhereInput | InstitutionWhereInput[]
+    id?: UuidFilter<"Institution"> | string
+    name?: StringFilter<"Institution"> | string
+    createdAt?: DateTimeFilter<"Institution"> | Date | string
+  }
+
+  export type InstitutionOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InstitutionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: InstitutionWhereInput | InstitutionWhereInput[]
+    OR?: InstitutionWhereInput[]
+    NOT?: InstitutionWhereInput | InstitutionWhereInput[]
+    name?: StringFilter<"Institution"> | string
+    createdAt?: DateTimeFilter<"Institution"> | Date | string
+  }, "id">
+
+  export type InstitutionOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    _count?: InstitutionCountOrderByAggregateInput
+    _max?: InstitutionMaxOrderByAggregateInput
+    _min?: InstitutionMinOrderByAggregateInput
+  }
+
+  export type InstitutionScalarWhereWithAggregatesInput = {
+    AND?: InstitutionScalarWhereWithAggregatesInput | InstitutionScalarWhereWithAggregatesInput[]
+    OR?: InstitutionScalarWhereWithAggregatesInput[]
+    NOT?: InstitutionScalarWhereWithAggregatesInput | InstitutionScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Institution"> | string
+    name?: StringWithAggregatesFilter<"Institution"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Institution"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
@@ -4933,6 +5878,30 @@ export namespace Prisma {
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     idempotencyKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InstitutionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InstitutionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InstitutionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InstitutionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5177,6 +6146,51 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTransactionStatusFilter<$PrismaModel>
     _max?: NestedEnumTransactionStatusFilter<$PrismaModel>
+  }
+
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
+  export type InstitutionCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InstitutionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InstitutionMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type WalletCreateNestedOneWithoutUserInput = {
@@ -5431,6 +6445,31 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTransactionStatusFilter<$PrismaModel>
     _max?: NestedEnumTransactionStatusFilter<$PrismaModel>
+  }
+
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type WalletCreateWithoutUserInput = {
